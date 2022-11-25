@@ -1,6 +1,6 @@
-# <user-media>
+# &lt;user-media&gt;
 
-A custom element wrapper for the getUserMedia API.
+`<user-media>` component attributes and API documentation.
 
 
 <!-- Auto Generated Below -->
