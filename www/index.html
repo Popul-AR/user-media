@@ -1,19 +1,4 @@
-<!doctype html>
-<html dir="ltr" lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>user-media component demo</title>
-
-  <script type="module" src="https://unpkg.com/@popul-ar/user-media@latest"></script>
-  <!-- <link rel="modulepreload" href="./build/p-e357e7cb.js">
-  <script type="module" src="./build/p-e357e7cb.js" data-stencil data-resources-url="/build/"
-    data-stencil-namespace="user-media"></script>
-  <script nomodule="" src="./build/user-media.js" data-stencil></script> -->
-
-  <style>
-    html,
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>user-media component demo</title> <link rel="modulepreload" href="/build/p-e357e7cb.js"><script type="module" src="/build/p-e357e7cb.js" data-stencil data-resources-url="/build/" data-stencil-namespace="user-media"></script> <script nomodule="" src="/build/user-media.js" data-stencil></script> <style>html,
     body {
       margin: 0;
       width: 100%;
@@ -32,26 +17,11 @@
       top: 10px;
       left: 10px;
       z-index: 100;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="controls"> <select name="device" id="device">
-      <option value="default">default</option>
-    </select> <select name="resolution" id="resolution">
-      <option value="640:480">640:480</option>
-      <option value="1280:720">1280:720</option>
-      <option value="1920:1280">1920:1280</option>
-    </select> <button id="stopStream">stopStream()</button>
-    <p id="frame-counter">frame: 0</p>
-  </div>
-  <user-media audio="false" width="640" height="480" controls=""></user-media>
-  <script>
+    }</style> </head> <body> <div id="controls"> <select name="device" id="device"> <option value="default">default</option> </select> <select name="resolution" id="resolution"> <option value="640:480">640:480</option> <option value="1280:720">1280:720</option> <option value="1920:1280">1920:1280</option> </select> <button id="stopStream">stopStream()</button> <p id="frame-counter">frame: 0</p> </div> <user-media audio="false" width="640" height="480" controls=""></user-media> <script>
     document.addEventListener('DOMContentLoaded', () => {
-
+      
       const um = document.querySelector('user-media')
-
+      
       // stream state events
       um.addEventListener('streamactive', async () => {
         console.log('streamactive')
@@ -95,7 +65,4 @@
       })
     })
 
-  </script>
-</body>
-
-</html>
+  </script> </body></html>
