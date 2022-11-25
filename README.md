@@ -1,6 +1,6 @@
-## <user-media>
+## &lt;user-media&gt;
 
-A WebComponent wrapper for the [`getUserMedia` API](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). 
+A WebComponent wrapper for the [`getUserMedia` API](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). Get webcam video and microphone audio streams with a simple html tag!
 
 ## Installation
 
@@ -33,13 +33,13 @@ See the [`<user-media>` component API documentation](./user-media/src/components
 
 ## Demos
 
-[Basic webcam example](www/index.html)
+[Basic webcam example](www/index.html): device selector with a few controls
 
-[Simplest useage](www/examples/simplest.html)
+[Simplest useage](www/examples/simplest.html): just the tag
 
-[Audio controls](www/examples/audio.html)
+[Audio controls](www/examples/audio.html): audio streams and properties
 
-[Advanced properties](www/examples/advanced.html)
+[Advanced properties](www/examples/advanced.html): zoom, contrast, exposure mode, etc...
 
 ## Development
 
