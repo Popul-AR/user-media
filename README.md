@@ -6,16 +6,15 @@ A WebComponent wrapper for the [`getUserMedia` API](https://developer.mozilla.or
 
 ### Loading from CDN
 
-TODO
-https://unpkg.com/:package@:version/:file
-```
-<script type="module" src="/build/user-media.esm.js"></script>
-<script nomodule src="/build/user-media.js"></script>
-```
+Load the component from unpkg with a script tag: 
+
+`<script type="module" src="https://unpkg.com/@popul-ar/user-media@latest"></script>`
 
 ### Installing from NPM
 
-TODO
+Install the module: `npm install --save @popul-ar/user-media`
+
+Import the module: `import '@popul-ar/user-media'`
 
 
 ## Examples
@@ -48,7 +47,7 @@ See the [`<user-media>` component API documentation](./user-media/src/components
 
 `npm start`: starts a dev server and runs a watcher for compiling the component
 
-`npm run build`: builds the docs
+`npm run build`: builds the component in production mode and generates docs
 
 ---
 

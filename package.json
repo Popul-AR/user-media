@@ -12,7 +12,7 @@
   "unpkg": "dist/user-media/user-media.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/The-AR-Company/user-media-component.git"
+    "url": "git+https://github.com/popul-ar/user-media.git"
   },
   "files": [
     "dist/",
@@ -37,8 +37,8 @@
   "license": "MIT",
   "private": false,
   "bugs": {
-    "url": "https://github.com/The-AR-Company/user-media-component/issues"
+    "url": "https://github.com/popul-ar/user-media/issues"
   },
-  "homepage": "https://github.com/The-AR-Company/user-media-component#readme",
+  "homepage": "https://github.com/popul-ar/user-media#readme",
   "author": "positlabs"
 }

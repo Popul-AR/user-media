@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Audio constraints example</title>
+
+  <script type="module" src="/build/user-media.esm.js"></script>
+  <script nomodule src="/build/user-media.js"></script>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    user-media {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+    }
+
+    #controls .control {
+      display: block;
+      margin: 10px 0;
+    }
+
+    #settings {
+      left: 50%;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+  <user-media 
+    video="false" 
+    audio="true" 
+    controls
+    volume=".5"
+    muted="false"
+    sample-rate="48000" 
+    sample-size="16" 
+    channel-count="1" 
+    latency="0"
+    echo-cancellation="true" 
+    auto-gain-control="false" 
+    noise-supression="true"
+    ></user-media>
+
+  <div id="settings">
+
+  </div>
+
+  <div id="controls">
+    <div class="control">
+      <select name="device" id="device">
+        <option value="default">default</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="sampleRate">sample rate</label>
+      <select id="sampleRate">
+        <option value="">default</option>
+        <option value="4000">4000</option>
+        <option value="16000">16000</option>
+        <option value="48000">48000</option>
+        <option value="128000">128000</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="sampleSize">sample size</label>
+      <select id="sampleSize">
+        <option value="">default</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+        <option value="32">32</option>
+        <option value="64">64</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="channelCount">channel count</label>
+      <select id="channelCount">
+        <option value="">default</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="latency">latency</label>
+      <input type="range" name="latency" id="latency" min="0" max="2" step=".0001" value="0">
+    </div>
+
+    <div class="control">
+      <label for="volume">volume</label>
+      <input type="range" name="volume" id="volume" min="0" max="1" step=".01" value=".5">
+    </div>
+
+    <div class="control">
+      <label for="echoCancellation">echo cancellation</label>
+      <input type="checkbox" name="echoCancellation" id="echoCancellation" checked>
+    </div>
+
+    <div class="control">
+      <label for="autoGainControl">auto gain control</label>
+      <input type="checkbox" name="autoGainControl" id="autoGainControl">
+    </div>
+
+    <div class="control">
+      <label for="noiseSuppression">noise suppression</label>
+      <input type="checkbox" name="noiseSuppression" id="noiseSuppression" checked>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const settingsEl = document.querySelector('#settings')
+      const um = document.querySelector('user-media')
+
+      um.addEventListener('streamactive', async () => {
+        console.log('streamactive')
+        const settings = await um.getTrackSettings('audio')
+        console.log('audio track settings', settings)
+
+        settingsEl.innerText = JSON.stringify(settings, null, 2)
+
+        const supportedConstraints = await um.getSupportedConstraints()
+        console.log('supported constraints', supportedConstraints)
+
+        // disable controls for unsupported constraints
+        const audioConstraints = [
+          'sampleRate',
+          'sampleSize',
+          'echoCancellation',
+          'autoGainControl',
+          'noiseSuppression',
+          'latency',
+          'channelCount'
+        ]
+        audioConstraints.forEach(constraint => {
+          if(!supportedConstraints[constraint]){
+            document.querySelector(`.control #${constraint}`).setAttribute('disabled', '')
+          }
+        })
+      })
+
+      // device selector
+      const deviceSelect = document.querySelector('#device')
+      um.getMediaDevices('audioinput').then(devices => {
+        devices.map(device => {
+          const option = document.createElement('option')
+          option.innerText = device.label
+          option.value = device.deviceId
+          deviceSelect.appendChild(option)
+        })
+      }).catch(err => console.error(err))
+      deviceSelect.addEventListener('change', (e) => {
+        um.audioDeviceId = e.target.value
+      })
+
+      document.querySelector('#sampleRate').addEventListener('change', e => um.sampleRate = e.target.value)
+      document.querySelector('#sampleSize').addEventListener('change', e => um.sampleSize = e.target.value)
+      document.querySelector('#channelCount').addEventListener('change', e => um.channelCount = e.target.value)
+
+      document.querySelector('#echoCancellation').addEventListener('change', e => um.echoCancellation = e.target.checked)
+      document.querySelector('#noiseSuppression').addEventListener('change', e => um.noiseSuppression = e.target.checked)
+      document.querySelector('#autoGainControl').addEventListener('change', e => um.autoGainControl = e.target.checked)
+      document.querySelector('#volume').addEventListener('input', e => um.volume = e.target.value)
+      document.querySelector('#latency').addEventListener('input', e => um.latency = e.target.value)
+
+    })
+
+
+  </script>
+</body>
+
+</html>

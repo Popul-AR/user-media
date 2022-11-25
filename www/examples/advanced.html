@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>user-media component demo</title>
+
+  <script type="module" src="/build/user-media.esm.js"></script>
+  <script nomodule src="/build/user-media.js"></script>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    user-media {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+    }
+
+    .control {
+      margin: 10px;
+    }
+    .control label {
+      margin: 0 5px;
+      width: 120px;
+      display: inline-block;
+    }
+
+
+    #info {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="controls">
+    <div class="control">
+      <label for="device">device</label>
+      <select name="device" id="device">
+        <option value="default">default</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="resolution">resolution</label>
+      <select name="resolution" id="resolution">
+        <option value="640:480">640:480</option>
+        <option value="1280:720">1280:720</option>
+        <option value="1920:1280">1920:1280</option>
+      </select>
+    </div>
+    <div class="control">
+      <button id="stopStream">stopStream()</button>
+    </div>
+    <div id="dynamicControls"></div>
+  </div>
+
+  <div id="info">
+    <p id="frame-counter">frame: 0</p>
+  </div>
+
+  <user-media audio="false" width="640" height="480" controls></user-media>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+
+      const um = document.querySelector('user-media')
+      const controls = document.querySelector('#controls')
+      const dynamicControls = document.querySelector('#dynamicControls')
+
+      // stream state events
+      um.addEventListener('streamactive', async () => {
+        console.log('streamactive')
+        const settings = await um.getTrackSettings()
+        const capabilities = await um.getCapabilities()
+        console.log('video track capabilities', capabilities)
+        console.log('video track settings', settings)
+        initDynamicControls(capabilities, settings)
+      })
+      um.addEventListener('streaminactive', () => console.log('streaminactive'))
+      // stop stream button
+      document.querySelector('#stopStream').addEventListener('click', () => um.stopStream())
+
+      // device selector
+      const deviceSelect = document.querySelector('#device')
+      um.getMediaDevices('videoinput').then(devices => {
+        devices.map(device => {
+          const option = document.createElement('option')
+          option.innerText = device.label
+          option.value = device.deviceId
+          deviceSelect.appendChild(option)
+        })
+      }).catch(err => console.error(err))
+      deviceSelect.addEventListener('change', (e) => {
+        um.videoDeviceId = e.target.value
+      })
+
+      // resolution selector
+      document.querySelector('#resolution').addEventListener('change', (e) => {
+        console.log(e.target.value)
+        const [w, h] = e.target.value.split(':')
+        um.width = w
+        um.height = h
+      })
+
+      // frame ticker
+      let frameNum = 0
+      const frameCounter = document.querySelector('#frame-counter')
+      um.addEventListener('frameupdate', (e) => {
+        // console.log('frameupdate', e.detail)
+        frameCounter.innerText = 'frame: ' + frameNum
+        frameNum++
+      })
+
+      const initDynamicControls = (capabilities, settings) => {
+        dynamicControls.innerHTML = ''
+
+        // create controls for ranges and option selectors
+        Object.entries(capabilities).forEach(([name, capability]) => {
+          console.log(name, capability)
+          const control = document.createElement('div')
+          control.classList.add('control')
+          let el
+          if (Array.isArray(capability)) {
+            el = document.createElement('select')
+            capability.forEach(item => {
+              const option = document.createElement('option')
+              option.value = item
+              option.innerText = item
+              el.appendChild(option)
+            })
+            el.addEventListener('change', () => {
+              um[name] = el.value
+            })
+          } else if (capability.max !== undefined) {
+            el = document.createElement('input')
+            el.type = 'range'
+            el.value = settings[name]
+            el.min = capability.min
+            el.max = capability.max
+            el.step = capability.step || .01
+            el.addEventListener('input', () => {
+              um[name] = el.value
+              console.log(name, el.value)
+            })
+          } else {
+            return // no handler for strings
+          }
+          el.id = name
+          el.removeAttribute('disabled')
+          const label = document.createElement('label')
+          label.setAttribute('for', name)
+          label.innerText = name
+          control.appendChild(label)
+          control.appendChild(el)
+          dynamicControls.appendChild(control)
+        })
+      }
+
+    })
+
+  </script>
+</body>
+
+</html>
