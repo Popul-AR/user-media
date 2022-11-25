@@ -33,7 +33,7 @@ You can also specify other attributes depending on your needs.
 
 ## Documentation
 
-See the [`<user-media>` component API documentation](./user-media/src/components/user-media/readme.md) for more details about attributes, events, and methods.
+See the [`<user-media>` component API documentation](./src/components/user-media/readme.md) for more details about attributes, events, and methods.
 
 ## Demos
 
