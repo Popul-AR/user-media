@@ -39,11 +39,11 @@ See the [`<user-media>` component API documentation](./src/components/user-media
 
 [Basic webcam example](www/index.html): device selector with a few controls
 
-[Simplest usage](www/examples/simplest.html): just the tag
+[Simplest usage](https://popul-ar.github.io/user-media/www/examples/simplest.html): just the tag
 
-[Audio controls](www/examples/audio.html): audio streams and properties
+[Audio controls](https://popul-ar.github.io/user-media/www/examples/audio.html): audio streams and properties. ⚠️ Headphones recommended to prevent feedback loops ⚠️.
 
-[Advanced properties](www/examples/advanced.html): zoom, contrast, exposure mode, etc...
+[Advanced properties](https://popul-ar.github.io/user-media/www/examples/advanced.html): zoom, contrast, exposure mode, etc...
 
 ## Development
 

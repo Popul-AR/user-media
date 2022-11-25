@@ -1,4 +1,5 @@
-<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>user-media component demo</title> <link rel="modulepreload" href="/build/p-e357e7cb.js"><script type="module" src="/build/p-e357e7cb.js" data-stencil data-resources-url="/build/" data-stencil-namespace="user-media"></script> <script nomodule="" src="/build/user-media.js" data-stencil></script> <style>html,
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>user-media component demo</title> <script type="module" src="https://unpkg.com/@popul-ar/user-media@latest"></script> <!-- <script type="module" src="/build/user-media.esm.js"></script>
+  <script nomodule src="/build/user-media.js"></script> --> <style>html,
     body {
       margin: 0;
       width: 100%;
@@ -65,4 +66,13 @@
       })
     })
 
-  </script> </body></html>
+  </script> <script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  // auto-unregister service worker during dev mode
+  navigator.serviceWorker.getRegistration().then(function(registration) {
+  if (registration) {
+    registration.unregister().then(function() { location.reload(true) });
+  }
+  });
+}
+</script></body></html>
