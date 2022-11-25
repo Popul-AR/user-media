@@ -1,6 +1,8 @@
 ## &lt;user-media&gt;
 
-A WebComponent wrapper for the [`getUserMedia` API](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). Get webcam video and microphone audio streams with a simple html tag!
+A WebComponent wrapper for the [`getUserMedia` API](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). 
+
+Get webcam video and microphone audio streams with a simple html tag!
 
 ## Installation
 
@@ -21,7 +23,7 @@ Import the module: `import '@popul-ar/user-media'`
 
 Using the component without any attributes will give you a muted video element with default webcam settings.
 
-`<user-media>`
+`<user-media></user-media>`
 
 You can also specify other attributes depending on your needs. 
 
@@ -29,13 +31,15 @@ You can also specify other attributes depending on your needs.
 
 `<user-media aspect-ratio="1.333" video-facing-mode="user"></user-media>`
 
+## Documentation
+
 See the [`<user-media>` component API documentation](./user-media/src/components/user-media/readme.md) for more details about attributes, events, and methods.
 
 ## Demos
 
 [Basic webcam example](www/index.html): device selector with a few controls
 
-[Simplest useage](www/examples/simplest.html): just the tag
+[Simplest usage](www/examples/simplest.html): just the tag
 
 [Audio controls](www/examples/audio.html): audio streams and properties
 
