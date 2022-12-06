@@ -219,6 +219,7 @@ export class UserMedia {
         if (this.videoElement) return resolve(this.videoElement)
         else wait(tryResolving)
       }
+      tryResolving()
     })
   }
 
